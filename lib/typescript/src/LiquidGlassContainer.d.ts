@@ -1,0 +1,38 @@
+import React from 'react';
+import { type ViewProps } from 'react-native';
+import ReactNativeLiquidGlassContainer from './ReactNativeLiquidGlassContainerNativeComponent';
+export interface LiquidGlassContainerProps extends ViewProps {
+    /**
+     * @description The spacing value for the glass container effect
+     *
+     * @default 0
+     *
+     * @platform iOS
+     */
+    spacing?: number;
+}
+/**
+ * LiquidGlassContainer component
+ *
+ * A UIKit-based container that applies the iOS 26+ UIGlassContainerEffect.
+ * This component uses the liquid glass container effect with configurable spacing.
+ *
+ * Platform: iOS only (iOS 26+)
+ *
+ * @platform ios
+ *
+ * @example
+ * ```tsx
+ * <LiquidGlassContainer spacing={20} style={{ flex: 1 }}>
+ *   <Text>Content inside glass container</Text>
+ * </LiquidGlassContainer>
+ * ```
+ */
+/**
+ * Ref to the underlying native glass container. On the fallback path
+ * (non-iOS or iOS < 26, which render a plain View) the ref is not attached.
+ */
+export type LiquidGlassContainerRef = React.ComponentRef<typeof ReactNativeLiquidGlassContainer>;
+export declare const LiquidGlassContainer: React.NamedExoticComponent<LiquidGlassContainerProps & React.RefAttributes<React.Component<import("./ReactNativeLiquidGlassContainerNativeComponent").NativeProps, {}, any> & import("react-native").ReactNativeElement>>;
+export default LiquidGlassContainer;
+//# sourceMappingURL=LiquidGlassContainer.d.ts.map

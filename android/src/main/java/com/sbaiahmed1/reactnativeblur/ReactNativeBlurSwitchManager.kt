@@ -10,7 +10,6 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.facebook.react.viewmanagers.ReactNativeBlurSwitchManagerInterface
 import com.facebook.react.viewmanagers.ReactNativeBlurSwitchManagerDelegate
-import androidx.core.graphics.toColorInt
 
 @ReactModule(name = ReactNativeBlurSwitchManager.NAME)
 class ReactNativeBlurSwitchManager : SimpleViewManager<ReactNativeBlurSwitch>(),
@@ -45,6 +44,10 @@ class ReactNativeBlurSwitchManager : SimpleViewManager<ReactNativeBlurSwitch>(),
     view?.setValue(value)
   }
 
+  override fun setNativeValue(view: ReactNativeBlurSwitch?, value: Boolean) {
+    view?.setValue(value)
+  }
+
   @ReactProp(name = "blurAmount")
   override fun setBlurAmount(view: ReactNativeBlurSwitch?, blurAmount: Double) {
     view?.setBlurAmount(blurAmount.toFloat())
@@ -59,7 +62,7 @@ class ReactNativeBlurSwitchManager : SimpleViewManager<ReactNativeBlurSwitch>(),
   override fun setThumbColor(view: ReactNativeBlurSwitch?, color: String?) {
     color?.let {
       try {
-        view?.setThumbColor(it.toColorInt())
+        view?.setThumbColor(parseReactColor(it))
       } catch (e: Exception) {
         android.util.Log.w("ReactNativeBlurSwitchManager", "Invalid thumbColor: $color", e)
       }
@@ -70,7 +73,7 @@ class ReactNativeBlurSwitchManager : SimpleViewManager<ReactNativeBlurSwitch>(),
   override fun setTrackColorOff(view: ReactNativeBlurSwitch?, color: String?) {
     color?.let {
       try {
-        view?.setTrackColorOff(it.toColorInt())
+        view?.setTrackColorOff(parseReactColor(it))
       } catch (e: Exception) {
         android.util.Log.w("ReactNativeBlurSwitchManager", "Invalid trackColorOff: $color", e)
       }
@@ -81,7 +84,7 @@ class ReactNativeBlurSwitchManager : SimpleViewManager<ReactNativeBlurSwitch>(),
   override fun setTrackColorOn(view: ReactNativeBlurSwitch?, color: String?) {
     color?.let {
       try {
-        view?.setTrackColorOn(it.toColorInt())
+        view?.setTrackColorOn(parseReactColor(it))
       } catch (e: Exception) {
         android.util.Log.w("ReactNativeBlurSwitchManager", "Invalid trackColorOn: $color", e)
       }

@@ -14,7 +14,6 @@ import android.view.ViewOutlineProvider
 import android.view.ViewTreeObserver
 import com.qmdeve.blurview.widget.BlurViewGroup
 import com.qmdeve.blurview.base.BaseBlurViewGroup
-import androidx.core.graphics.toColorInt
 
 import android.view.View.MeasureSpec
 
@@ -280,7 +279,7 @@ class ReactNativeBlurView : BlurViewGroup {
   fun setGlassTintColor(color: String?) {
     color?.let {
       try {
-        glassTintColor = it.toColorInt()
+        glassTintColor = parseReactColor(it)
         logDebug("setGlassTintColor: $color -> $glassTintColor")
         updateGlassEffect()
       } catch (e: Exception) {
@@ -396,18 +395,19 @@ class ReactNativeBlurView : BlurViewGroup {
       val bottomLeft = if (borderBottomLeftRadius >= 0) convertDpToPx(borderBottomLeftRadius) else baseRadius
       val bottomRight = if (borderBottomRightRadius >= 0) convertDpToPx(borderBottomRightRadius) else baseRadius
 
+      // QmBlurView's uniform setter resets all four individual radii.
+      super.setCornerRadius(baseRadius)
       super.setTopLeftCornerRadius(topLeft)
       super.setTopRightCornerRadius(topRight)
       super.setBottomLeftCornerRadius(bottomLeft)
       super.setBottomRightCornerRadius(bottomRight)
-      super.setCornerRadius(baseRadius)
 
       val isUniform = topLeft == topRight && topRight == bottomLeft && bottomLeft == bottomRight
 
       if (isUniform) {
         outlineProvider = object : ViewOutlineProvider() {
           override fun getOutline(view: View, outline: Outline?) {
-            outline?.setRoundRect(0, 0, view.width, view.height, baseRadius)
+            outline?.setRoundRect(0, 0, view.width, view.height, topLeft)
           }
         }
       } else {
